@@ -1,1 +1,1 @@
-export const DB_Name = "Authentication App"
+export const DB_Name = "Authentication_App"
