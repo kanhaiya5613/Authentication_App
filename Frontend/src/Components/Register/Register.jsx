@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 function Register() {
+    
     const [User, setuser] = useState({
         userName: "",
         email: "",
@@ -22,11 +23,50 @@ function Register() {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(User);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  if (!User.avatar) {
+    alert("Avatar is required");
+    return;
+  }
+
+  try {
+    const formData = new FormData();
+
+    formData.append("fullName", User.fullName);
+    formData.append("email", User.email);
+    formData.append("userName", User.userName);
+    formData.append("password", User.password);
+    formData.append("avatar", User.avatar);
+
+    if (User.coverImage) {
+      formData.append("coverImage", User.coverImage);
     }
+
+    const response = await fetch(
+      "http://localhost:8000/api/v1/users/register",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Backend error:", errorText);
+      return;
+    }
+
+    const data = await response.json();
+    console.log("Success:", data);
+    alert("Congratulations, User Registered Successfully")
+  } catch (error) {
+    console.log("Register error:", error);
+  }
+};
+
+
     return (
         <section>
             <main>
