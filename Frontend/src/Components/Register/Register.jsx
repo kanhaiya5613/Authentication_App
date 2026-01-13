@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 function Register() {
 
     const [User, setuser] = useState({
-        userName: "",
+        username: "",
         email: "",
         fullName: "",
         avatar: "",
@@ -36,7 +36,7 @@ function Register() {
 
     formData.append("fullName", User.fullName);
     formData.append("email", User.email);
-    formData.append("userName", User.userName);
+    formData.append("username", User.userName);
     formData.append("password", User.password);
     formData.append("avatar", User.avatar);
 
@@ -59,10 +59,14 @@ function Register() {
     }
 
     const data = await response.json();
+    // console.log(data.username);
+    // console.log(data.fullName);
+    
+    
     console.log("Success:", data);
     alert("Congratulations, User Registered Successfully")
     setuser({
-        userName: "",
+        username: "",
         email: "",
         fullName: "",
         avatar: "",
@@ -98,7 +102,7 @@ function Register() {
 
                                     <input className="border-2 p-2 flex-1"
                                         type='text'
-                                        name="userName"
+                                        name="username"
                                         placeholder="username"
                                         id="username"
                                         required
