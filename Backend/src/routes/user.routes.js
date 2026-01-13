@@ -1,6 +1,6 @@
 import {Router} from "express";
 import {registerUser} from "../controllers/user.controller.js"
-
+import {LoginUser} from "../controllers/user.controller.js"
 import {upload} from "../middlewares/multer.middleware.js";
 
 const router = Router()
@@ -18,5 +18,12 @@ router.route("/register").post(
     ]),
     registerUser
 )
+
+
+router.post(
+  "/login",
+  upload.none(), // ✅ REQUIRED for form-data without files
+  LoginUser
+);
 
 export default router
