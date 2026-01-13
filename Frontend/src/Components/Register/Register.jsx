@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 function Register() {
-    
+
     const [User, setuser] = useState({
         userName: "",
         email: "",
@@ -61,6 +61,14 @@ function Register() {
     const data = await response.json();
     console.log("Success:", data);
     alert("Congratulations, User Registered Successfully")
+    setuser({
+        userName: "",
+        email: "",
+        fullName: "",
+        avatar: "",
+        coverImage: "",
+        password: ""
+    })
   } catch (error) {
     console.log("Register error:", error);
   }

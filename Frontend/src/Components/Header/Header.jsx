@@ -4,7 +4,7 @@ const Header = () => {
     return (
         <header className="bg-black text-white">
             <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-                <div className="text-x1 font-bold">Logo</div>
+                <div className="text-x1 font-bold">Kanhaya</div>
                 <div className="flex flex-wrap">
                     <ul className=" flex gap-6 items-center">
                         <li className="hover:text-gray-300 cursor-pointer">Home</li>
