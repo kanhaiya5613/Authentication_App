@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import { Link } from 'react-router-dom';
 function Register() {
 
     const [User, setuser] = useState({
@@ -25,7 +25,7 @@ function Register() {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-
+    console.log(User)
   if (!User.avatar) {
     alert("Avatar is required");
     return;
@@ -36,7 +36,7 @@ function Register() {
 
     formData.append("fullName", User.fullName);
     formData.append("email", User.email);
-    formData.append("username", User.userName);
+    formData.append("username", User.username);
     formData.append("password", User.password);
     formData.append("avatar", User.avatar);
 
@@ -107,7 +107,7 @@ function Register() {
                                         id="username"
                                         required
                                         autoComplete="off"
-                                        value={User.userName}
+                                        value={User.username}
                                         onChange={handleInput}
                                     />
                                 </div>
@@ -188,6 +188,7 @@ function Register() {
 
                                 <button type='submit' className='btn btn-submit text-xl mr-3 bg-blue-500 rounded-3xl p-2.5 text-white font-semibold active:scale-95' >Register Now</button>
                             </form>
+                            <div>Already Have an Account , <Link to="/Login" className='text-xl text-blue-500'>Log In</Link></div>
                         </div>
                     </div>
 
