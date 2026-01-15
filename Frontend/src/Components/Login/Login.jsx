@@ -43,9 +43,8 @@ const Login = () => {
 
             const data = await response.json();
             console.log("Success:", data);
-            alert("Congratulations, User Logged In Successfully")
             login(data.accessToken, data);
-            navigate("/");
+            navigate("/home");
         } catch (e) {
             console.log("Error", e)
         }

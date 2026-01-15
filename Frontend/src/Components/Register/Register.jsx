@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from "react-router-dom";
 function Register() {
+    const navigate = useNavigate();
 
     const [User, setuser] = useState({
         username: "",
@@ -64,7 +65,8 @@ function Register() {
     
     
     console.log("Success:", data);
-    alert("Congratulations, User Registered Successfully")
+    navigate("/login");
+
     setuser({
         username: "",
         email: "",
@@ -73,6 +75,7 @@ function Register() {
         coverImage: "",
         password: ""
     })
+    
   } catch (error) {
     console.log("Register error:", error);
   }

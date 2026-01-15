@@ -1,23 +1,43 @@
 import React from "react";
 import {data, Link, NavLink} from 'react-router-dom'
-import { useState } from "react";
+import { useState ,useEffect,useRef} from "react";
 import {useAuth} from "../../Context/authContext.jsx";
 const Header = () => {
     const {isLoggedIn,User,logout} = useAuth();
-    console.log(User.data.User.avatar.url)
+    //console.log(User.data.User.avatar.url)
     const [open, setOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+// this is for when we click anywhere then icon list removed
+ useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target)
+    ) {
+      setOpen(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
     return (
         <header className="bg-black text-white">
             <nav className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
                 <Link to="/" className="text-3x1 font-bold bg-orange-500  p-2 rounded-3xl">Kanhaiya</Link>
                 <div className="flex flex-wrap">
-                    <ul to="#" className=" flex gap-6 items-center">
-                        <li> <Link to="#" className="hover:text-gray-300 cursor-pointer">Home</Link></li>
-                        <li> <Link to="/About" className="hover:text-gray-300 cursor-pointer">About</Link></li>
-                        <li> <Link to="Contact" className="hover:text-gray-300 cursor-pointer">Contact</Link></li>
-                        <li> <Link to="/Services" className="hover:text-gray-300 cursor-pointer">Services</Link></li>
+                    <ul  className=" flex gap-6 items-center">
+                        <li> <Link to="/home" className="hover:text-gray-300 cursor-pointer">Home</Link></li>
+                        <li> <Link to="/about" className="hover:text-gray-300 cursor-pointer">About</Link></li>
+                        <li> <Link to="contacts" className="hover:text-gray-300 cursor-pointer">Contact</Link></li>
+                        <li> <Link to="/services" className="hover:text-gray-300 cursor-pointer">Services</Link></li>
                         {isLoggedIn?(
-                            <li className="relative">
+                            <li className="relative"  ref={dropdownRef}>
                                 <button onClick={()=> setOpen(!open)}>
                                     <img
                                     src={User.data.User.avatar.url || "/avatar.jpg"}
@@ -31,19 +51,18 @@ const Header = () => {
                                             {User.data.User.fullName || "User"}
                                             
                                         </p>
-                                        <Link
-                                        to="/dashboard"
-                                        className="block px-4 py-2 hover:bg-gray-100"
-                                        >
-                                            Dashboard
-                                        </Link>
+                                        
                                         <Link
                                         to="/profile"
+                                        onClick={()=>setOpen(false)}
                                         className="block px-4 py-2 hover:bg-gray-100">
                                             Profile
                                         </Link>
                                         <button 
-                                        onClick={logout}
+                                        
+                                        onClick={()=>{logout();
+                                            setOpen(false)
+                                        } }
                                         className = "w-full text-left px-4 py-4 text-red-600 hover:bg-gray-100 active:scale-95">
                                             Logout
                                         </button>
@@ -65,6 +84,8 @@ const Header = () => {
             </nav>
         </header>
     )
+   
+
 }
 
 export default Header
