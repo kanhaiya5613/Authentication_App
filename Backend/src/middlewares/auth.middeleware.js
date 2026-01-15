@@ -13,7 +13,7 @@ export const verifyJWT = asyncHandler(async(req,_,next) => {
         // if no user found throw error
         // attach user to request object
         // call next middleware
-        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer", "")
+        let token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer", "")
 
         if(!token){
             throw new ApiError(401,"Unauthorizes access")
@@ -26,7 +26,7 @@ export const verifyJWT = asyncHandler(async(req,_,next) => {
         if(!user){
             throw new ApiError(401, "Invalid Access Token")
         }
-        req,user = user;
+        req.user = user;
         next()
     } catch (error) {
         throw new ApiError(401, error?.message || "Invalid access token");

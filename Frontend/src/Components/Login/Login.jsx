@@ -1,7 +1,12 @@
 import React from 'react'
 import { useState } from 'react';
-import { Form } from 'react-router-dom';
+import Header from '../Header/Header.jsx';
+import {useAuth} from "../../Context/authContext.jsx";
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
+    // const [isLoggedIn, setLoggedIn] = useState(false);
+    const {login} = useAuth();
+    const navigate = useNavigate()
     const [User, setUser] = useState({
         username: "",
         email: "",
@@ -21,11 +26,11 @@ const Login = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(User)
+        //console.log(User)
         try {
             const formData = new FormData();
             formData.append("username", User.username)
-            formData.append("email", username.email)
+            formData.append("email", User.email)
             formData.append("password", User.password)
 
             const response = await fetch(
@@ -39,6 +44,8 @@ const Login = () => {
             const data = await response.json();
             console.log("Success:", data);
             alert("Congratulations, User Logged In Successfully")
+            login(data.accessToken, data);
+            navigate("/");
         } catch (e) {
             console.log("Error", e)
         }
@@ -81,7 +88,7 @@ const Login = () => {
                                         name="email"
                                         placeholder='email'
                                         id="email"
-                                        required
+                                        
                                         autoComplete='off'
                                         onChange={handleInput}
                                     />
